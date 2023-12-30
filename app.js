@@ -90,7 +90,11 @@ app.use("/", paymentRouter);
 //Index Route
 
 app.get("/", (req, res) => {
-  res.render("listings/home.ejs");
+  if (req.user.username == "admin") {
+    res.render("admin/admin.ejs");
+  } else {
+    res.render("listings/home.ejs");
+  }
 });
 app.get("/books", async (req, res) => {
   if (req.user.username != "admin") {
