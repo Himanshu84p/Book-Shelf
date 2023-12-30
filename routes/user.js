@@ -14,7 +14,6 @@ router.post("/signup", async (req, res) => {
   const newUser = new User({ username, email });
   try {
     const registeredUser = await User.register(newUser, password);
-    console.log(registeredUser);
     req.flash("success", "Registered successfully");
     res.redirect("/books");
   } catch (error) {
@@ -50,9 +49,7 @@ router.post(
 router.get("/orders", async (req, res) => {
   const ownerId = req.user._id;
   const ownerUsername = req.user.username;
-  console.log(ownerId);
   const allOrders = await Order.find({ owner: ownerId });
-  console.log(allOrders);
   res.render("listings/orders.ejs", { allOrders, ownerUsername });
 });
 

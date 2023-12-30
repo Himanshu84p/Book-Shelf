@@ -8,6 +8,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const userRouter = require("./routes/user.js");
 const cartRouter = require("./routes/cart.js");
 const adminRouter = require("./routes/admin.js");
@@ -18,7 +19,8 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/bookshelf";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/bookshelf";
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
   .then(() => {
@@ -29,7 +31,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -40,7 +42,20 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(methodOverride("_method"));
 app.use(bodyParser.json());
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+  console.log("Error in mongo session store");
+});
+
 const sessionOptions = {
+  store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
