@@ -73,7 +73,7 @@ router.post("/admin/new", isLoggedIn, async (req, res) => {
       let newBook = new Book(req.body.book);
       await newBook.save();
       req.flash("success", "New book listing created.");
-      res.redirect("/books");
+      res.redirect("/admin/books");
     } catch (error) {
       req.flash("error", "ISBN Should be unique.");
       console.log(error);
