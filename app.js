@@ -99,7 +99,7 @@ app.get("/books", async (req, res) => {
 app.get("/books/:id", async (req, res) => {
   let { id } = req.params;
   let book = await Book.findById(id);
-  res.render("listings/Show.ejs", { book });
+  res.render("listings/show.ejs", { book });
 });
 
 app.get("/cart", isLoggedIn, async (req, res) => {
