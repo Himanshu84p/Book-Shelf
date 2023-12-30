@@ -47,10 +47,14 @@ router.post(
 
 //order routes
 router.get("/orders", async (req, res) => {
-  const ownerId = req.user._id;
-  const ownerUsername = req.user.username;
-  const allOrders = await Order.find({ owner: ownerId });
-  res.render("listings/orders.ejs", { allOrders, ownerUsername });
+  if (req.user.username != "admin") {
+    const ownerId = req.user._id;
+    const ownerUsername = req.user.username;
+    const allOrders = await Order.find({ owner: ownerId });
+    res.render("listings/orders.ejs", { allOrders, ownerUsername });
+  } else {
+    res.render("listings/pagenotfound.ejs");
+  }
 });
 
 //logout requests

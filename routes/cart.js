@@ -7,17 +7,21 @@ const router = express.Router();
 //get cart items
 
 router.get("/cart", isLoggedIn, async (req, res) => {
-  const ownerId = req.user._id;
+  if (req.user.username != "admin") {
+    const ownerId = req.user._id;
 
-  try {
-    const cart = await Cart.findOne({ owner: ownerId });
-    if (cart && cart.books.length > 0) {
-      res.render("listings/cart.ejs", { cart });
-    } else {
-      res.render("listings/emptycart.ejs");
+    try {
+      const cart = await Cart.findOne({ owner: ownerId });
+      if (cart && cart.books.length > 0) {
+        res.render("listings/cart.ejs", { cart });
+      } else {
+        res.render("listings/emptycart.ejs");
+      }
+    } catch (error) {
+      res.status(500).send();
     }
-  } catch (error) {
-    res.status(500).send();
+  } else {
+    res.render("listings/pagenotfound.ejs");
   }
 });
 

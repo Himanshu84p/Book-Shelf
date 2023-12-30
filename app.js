@@ -20,6 +20,8 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 
 // const MONGO_URL = "mongodb://127.0.0.1:27017/bookshelf";
+
+//cloud db link
 const dbUrl = process.env.ATLASDB_URL;
 
 main()
@@ -91,19 +93,31 @@ app.get("/", (req, res) => {
   res.render("listings/home.ejs");
 });
 app.get("/books", async (req, res) => {
-  const allBooks = await Book.find({});
-  res.render("listings/books.ejs", { allBooks });
+  if (req.user.username != "admin") {
+    const allBooks = await Book.find({});
+    res.render("listings/books.ejs", { allBooks });
+  } else {
+    res.render("listings/pagenotfound.ejs");
+  }
 });
 
 //Show Route
 app.get("/books/:id", async (req, res) => {
-  let { id } = req.params;
-  let book = await Book.findById(id);
-  res.render("listings/show.ejs", { book });
+  if (req.user.username != "admin") {
+    let { id } = req.params;
+    let book = await Book.findById(id);
+    res.render("listings/show.ejs", { book });
+  } else {
+    res.render("listings/pagenotfound.ejs");
+  }
 });
 
 app.get("/cart", isLoggedIn, async (req, res) => {
-  res.redirect("/books");
+  if (req.user.username != "admin") {
+    res.redirect("/books");
+  } else {
+    res.render("listings/pagenotfound.ejs");
+  }
 });
 
 app.listen(process.env.PORT, () => {
