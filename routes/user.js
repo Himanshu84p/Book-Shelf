@@ -14,8 +14,8 @@ router.post("/signup", async (req, res) => {
   const newUser = new User({ username, email });
   try {
     const registeredUser = await User.register(newUser, password);
-    req.flash("success", "Registered successfully");
-    res.redirect("/books");
+    req.flash("success", "Registered successfully Login to access account");
+    res.redirect("/login");
   } catch (error) {
     req.flash("error", "Username already exist");
     res.redirect("/signup");

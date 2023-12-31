@@ -89,14 +89,14 @@ app.use("/", paymentRouter);
 
 //Index Route
 
-app.get("/", (req, res) => {
+app.get("/", isLoggedIn, (req, res) => {
   if (req.user.username == "admin") {
     res.render("admin/admin.ejs");
   } else {
     res.render("listings/home.ejs");
   }
 });
-app.get("/books", async (req, res) => {
+app.get("/books", isLoggedIn, async (req, res) => {
   if (req.user.username != "admin") {
     const allBooks = await Book.find({});
     res.render("listings/books.ejs", { allBooks });
@@ -106,7 +106,7 @@ app.get("/books", async (req, res) => {
 });
 
 //Show Route
-app.get("/books/:id", async (req, res) => {
+app.get("/books/:id", isLoggedIn, async (req, res) => {
   if (req.user.username != "admin") {
     let { id } = req.params;
     let book = await Book.findById(id);
