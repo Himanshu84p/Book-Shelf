@@ -2,6 +2,7 @@
 <div
   class="alert alert-success alert-dismissible fade show col-6 m-auto"
   role="alert"
+  id="successAlert"
 >
   <%= success %>
   <button
@@ -15,6 +16,7 @@
 <div
   class="alert alert-danger alert-dismissible fade show col-6 m-auto"
   role="alert"
+  id="errorAlert"
 >
   <%= error %>
   <button
@@ -25,3 +27,28 @@
   ></button>
 </div>
 <% } %>
+
+<style>
+  .alert {
+    transition: opacity 0.5s ease, height 0.5s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let successAlert = document.getElementById("successAlert");
+    let closeBtn = document.querySelector(".btn-close");
+    if (successAlert) {
+      setTimeout(function () {
+        closeBtn.click();
+      }, 2000);
+    }
+
+    let errorAlert = document.getElementById("errorAlert");
+    if (errorAlert) {
+      setTimeout(function () {
+        closeBtn.click();
+      }, 2000);
+    }
+  });
+</script>
