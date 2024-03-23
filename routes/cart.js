@@ -40,6 +40,7 @@ router.post("/cart", isLoggedIn, async (req, res) => {
     }
 
     const title = book.title;
+    const image = book.image;
     const price = book.price;
     const bookId = book.id;
     const author = book.author;
@@ -67,7 +68,7 @@ router.post("/cart", isLoggedIn, async (req, res) => {
       //if book is not present in the cart
       else {
         //pushing book to the array and calculate bill
-        cart.books.push({ bookId, title, author, price, quantity: 1 });
+        cart.books.push({ bookId, title, image, author, price, quantity: 1 });
         cart.bill = cart.books.reduce((acc, curr) => {
           return acc + curr.quantity * curr.price;
         }, 0);
@@ -81,7 +82,7 @@ router.post("/cart", isLoggedIn, async (req, res) => {
       //no cart exists, create one
       const newCart = await Cart.create({
         owner: ownerId,
-        books: [{ bookId, title, author, quantity, price }],
+        books: [{ bookId, title, image, author, quantity, price }],
         bill: quantity * price,
       });
       cart = await Cart.findOne({ owner: ownerId });

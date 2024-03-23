@@ -7,6 +7,7 @@
       <tr>
         <th>Name</th>
         <th>Order Id</th>
+        <th>Books</th>
         <th>Order Status</th>
         <th>Order Amount</th>
       </tr>
@@ -32,6 +33,14 @@
           <span class="badge badge-success rounded-pill d-inline"
             ><%= order.id %></span
           >
+        </td>
+        <td>
+          <%for(book of order.books){%>
+
+          <span class="badge badge-success rounded-pill d-inline"
+            ><%= book.title %></span
+          >
+          <%}%>
         </td>
         <td>
           <span class="badge badge-success rounded-pill d-inline"

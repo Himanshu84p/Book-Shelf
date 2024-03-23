@@ -10,7 +10,7 @@
     />
     <button class="btn btn-outline-success" type="submit">Search</button>
   </form>
-  <h1 class="heading">Welcome to the BookShelf</h1>
+  <h1 class="heading">Welcome to the Bookshelf</h1>
 
   <% if(query != "") {%>
   <h3 class="heading">Search Results for "<%= query %>"</h3>
@@ -35,7 +35,7 @@
 
     .book-details {
       padding: 20px;
-      height: 170px;
+      height: 180px;
     }
 
     .book-title {
@@ -48,12 +48,17 @@
       white-space: nowrap;
     }
 
-    .book-genre,
+    .book-price,
     .book-author,
     .book-rating {
       font-size: 14px;
       color: #666;
       margin-bottom: 5px;
+    }
+
+    .book-price {
+      color: #000;
+      font-size: 1.2rem;
     }
 
     .book-actions {
@@ -93,9 +98,11 @@
             <h3 class="book-title">
               <a href="/books/<%= book.id %>"><%= book.title %></a>
             </h3>
-            <p class="book-genre"><strong>Genre:</strong> <%= book.genre %></p>
             <p class="book-author">
               <strong>Author:</strong> <%= book.author %>
+            </p>
+            <p class="book-price">
+              <strong></strong> &#8377;<%= book.price %>.00
             </p>
             <div class="book-actions">
               <a href="/books/<%= book.id %>" class="btn btn-primary"
@@ -106,41 +113,43 @@
         </div>
       </div>
       <% } %>
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          <% if(currentPage > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="?query=<%= query %>&page=1">&laquo;</a>
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="?query=<%= query %>&page=<%= currentPage - 1 %>"
+              >&lt;</a
+            >
+          </li>
+          <% } %> <% for(let i = 1; i <= totalPages; i++) { %>
+          <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+            <a class="page-link" href="?query=<%= query %>&page=<%= i %>"
+              ><%= i %></a
+            >
+          </li>
+          <% } %> <% if(currentPage < totalPages) { %>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="?query=<%= query %>&page=<%= currentPage + 1 %>"
+              >&gt;</a
+            >
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="?query=<%= query %>&page=<%= totalPages %>"
+              >&raquo;</a
+            >
+          </li>
+          <% } %>
+        </ul>
+      </nav>
     </div>
-    <nav aria-label="Pagination">
-      <ul class="pagination">
-        <% if(currentPage > 1) { %>
-        <li class="page-item">
-          <a class="page-link" href="?query=<%= query %>&page=1">&laquo;</a>
-        </li>
-        <li class="page-item">
-          <a
-            class="page-link"
-            href="?query=<%= query %>&page=<%= currentPage - 1 %>"
-            >&lt;</a
-          >
-        </li>
-        <% } %> <% for(let i = 1; i <= totalPages; i++) { %>
-        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
-          <a class="page-link" href="?query=<%= query %>&page=<%= i %>"
-            ><%= i %></a
-          >
-        </li>
-        <% } %> <% if(currentPage < totalPages) { %>
-        <li class="page-item">
-          <a
-            class="page-link"
-            href="?query=<%= query %>&page=<%= currentPage + 1 %>"
-            >&gt;</a
-          >
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?query=<%= query %>&page=<%= totalPages %>"
-            >&raquo;</a
-          >
-        </li>
-        <% } %>
-      </ul>
-    </nav>
   </div>
 </body>

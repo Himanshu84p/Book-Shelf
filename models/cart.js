@@ -15,7 +15,12 @@ const cartSchema = new mongoose.Schema(
           ref: "Book",
           required: true,
         },
-        title: String,
+        title: {
+          type : String,
+        },
+        image : {
+          type : String,
+        },
         author: {
           type: String,
         },

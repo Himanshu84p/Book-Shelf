@@ -1,147 +1,108 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
 <body>
-  <section class="h-100 h-custom" style="background-color: #eee">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <div class="card">
-            <div class="card-body p-4">
-              <div class="row">
-                <div class="col-lg-7">
-                  <h5 class="mb-3">
-                    <a href="/books" class="text-body"
-                      ><i class="fas fa-long-arrow-alt-left me-2"></i>Continue
-                      shopping</a
-                    >
-                  </h5>
-                  <hr />
+ 
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <h5 class="mb-3">
+            <a href="/books" class="text-body">
+              <i class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping
+            </a>
+          </h5>
+          <hr />
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <p class="mb-1">Shopping cart</p>
+              <p class="mb-0">
+                You have <%= cart.books.length %> items in your cart
+              </p>
+            </div>
+          </div>
+          <% for (book of cart.books) { %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                  <img
+                    src="<%= book.image %>"
+                    alt="Book image"
+                    class="me-3"
+                    style="max-width: 100px"
+                  />
 
-                  <div
-                    class="d-flex justify-content-between align-items-center mb-4"
-                  >
-                    <div>
-                      <p class="mb-1">Shopping cart</p>
-                      <p class="mb-0">
-                        You have <%= cart.books.length%> items in your cart
-                      </p>
-                    </div>
+                  <div class="ms-3">
+                    <h6><%= book.title %></h6>
+                    <p class="small mb-0"><%= book.author %></p>
+                    <p class="small mb-0">Quantity: <%= book.quantity %></p>
                   </div>
-
-                  <%for(book of cart.books) {%>
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <div class="d-flex flex-row align-items-center">
-                          <div></div>
-                          <div class="ms-3">
-                            <h6><%= book.title %></h6>
-                            <p class="small mb-0"><%= book.author %></p>
-                          </div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                          <div style="width: 50px">
-                            <h6 class="fw-normal mb-0"><%= book.quantity %></h6>
-                          </div>
-                          <div style="width: 80px">
-                            <h6 class="mb-0">&#x20B9; <%= book.price %></h6>
-                          </div>
-                          <form action="/cart?_method=DELETE" method="post">
-                            <input
-                              type="hidden"
-                              name="id"
-                              value="<%= book.bookId %>"
-                            />
-                            <button type="submit" style="color: #cecece">
-                              <i class="fas fa-trash-alt"></i>
-                            </button>
-                          </form>
-                          <!-- <a href="#!" style="color: #cecece"
-                            ><i class="fas fa-trash-alt"></i
-                          ></a> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <%}%>
                 </div>
-                <div class="col-lg-5">
-                  <div class="card bg-primary text-white rounded-3">
-                    <div class="card-body">
-                      <div
-                        class="d-flex justify-content-between align-items-center mb-4"
-                      >
-                        <h5 class="mb-0">Checkout</h5>
-                      </div>
-
-                      <p class="small mb-2">Card type</p>
-                      <a href="#!" type="submit" class="text-white"
-                        ><i class="fab fa-cc-mastercard fa-2x me-2"></i
-                      ></a>
-                      <a href="#!" type="submit" class="text-white"
-                        ><i class="fab fa-cc-visa fa-2x me-2"></i
-                      ></a>
-                      <a href="#!" type="submit" class="text-white"
-                        ><i class="fab fa-cc-amex fa-2x me-2"></i
-                      ></a>
-                      <a href="#!" type="submit" class="text-white"
-                        ><i class="fab fa-cc-paypal fa-2x"></i
-                      ></a>
-
-                      <hr class="my-4" />
-
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Subtotal</p>
-                        <p class="mb-2">&#x20B9; <%= cart.bill %>.00</p>
-                      </div>
-
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Shipping</p>
-                        <p class="mb-2">&#x20B9;00.00</p>
-                      </div>
-
-                      <div class="d-flex justify-content-between mb-4">
-                        <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="mb-2">&#x20B9; <%= cart.bill %>.00</p>
-                      </div>
-                      <form>
-                        <input
-                          type="hidden"
-                          value="<%= cart.bill %> "
-                          name="amount"
-                          id="amount"
-                        />
-                        <input
-                          type="hidden"
-                          value="<%= JSON.stringify(cart)%>"
-                          name="cart"
-                          id="cart"
-                        />
-                        <button
-                          id="payButton"
-                          type="button"
-                          class="btn btn-info btn-block btn-lg"
-                        >
-                          <div class="d-flex justify-content-between">
-                            <span>&#x20B9; <%= cart.bill %></span>
-                            <span
-                              >Checkout
-                              <i class="fas fa-long-arrow-alt-right ms-2"></i
-                            ></span>
-                          </div>
-                        </button>
-                      </form>
-                    </div>
+                <div class="d-flex flex-row align-items-center">
+                  <div style="width: 80px">
+                    <h6 class="mb-0">&#x20B9; <%= book.price %></h6>
                   </div>
+                  <form action="/cart?_method=DELETE" method="post">
+                    <input type="hidden" name="id" value="<%= book.bookId %>" />
+                    <button type="submit" style="color: #000; border:none">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
+          <% } %>
+        </div>
+        <div class="col-lg-4">
+          <div class="card bg-primary text-white mb-4">
+            <div class="card-body">
+              <h2 class="mb-4">Checkout</h2>
+              <hr class="mb-4" />
+              <div class="d-flex justify-content-between mb-4">
+                <p class="mb-0">Subtotal</p>
+                <p class="mb-0">&#x20B9; <%= cart.bill %>.00</p>
+              </div>
+              <div class="d-flex justify-content-between mb-4">
+                <p class="mb-0">Shipping</p>
+                <p class="mb-0">&#x20B9; 00.00</p>
+              </div>
+              <div class="d-flex justify-content-between">
+                <p class="mb-0">Total (Incl. taxes)</p>
+                <p class="mb-0">&#x20B9; <%= cart.bill %>.00</p>
+              </div>
+            </div>
+          </div>
+          <form>
+            <input
+              type="hidden"
+              value="<%= cart.bill %>"
+              name="amount"
+              id="amount"
+            />
+            <input
+              type="hidden"
+              value="<%= JSON.stringify(cart) %>"
+              name="cart"
+              id="cart"
+            />
+            <button
+              type="button"
+              id="payButton"
+              class="btn btn-info btn-block btn-lg"
+            >
+              <div class="d-flex justify-content-between align-items-center">
+                <span>&#x20B9; <%= cart.bill %></span>
+                <span
+                  >Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i
+                ></span>
+              </div>
+            </button>
+          </form>
         </div>
       </div>
     </div>
   </section>
-
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="/javascript/razorpay.js"></script>
 </body>
