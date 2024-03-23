@@ -13,12 +13,13 @@ const userRouter = require("./routes/user.js");
 const cartRouter = require("./routes/cart.js");
 const adminRouter = require("./routes/admin.js");
 const paymentRouter = require("./routes/payment.js");
+const bookRouter = require("./routes/book.js");
 const ejsMate = require("ejs-mate");
 const { isLoggedIn } = require("./middleware.js");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
-
+const itemsPerPage = 8;
 // const MONGO_URL = "mongodb://127.0.0.1:27017/bookshelf";
 
 //cloud db link
@@ -83,6 +84,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", userRouter);
+app.use("/", bookRouter);
 app.use("/", cartRouter);
 app.use("/", adminRouter);
 app.use("/", paymentRouter);
@@ -99,7 +101,18 @@ app.get("/", isLoggedIn, (req, res) => {
 app.get("/books", isLoggedIn, async (req, res) => {
   if (req.user.username != "admin") {
     const allBooks = await Book.find({});
-    res.render("listings/books.ejs", { allBooks });
+    const page = parseInt(req.query.page) || 1;
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const totalPages = Math.ceil(allBooks.length / itemsPerPage);
+    const booksOnPage = allBooks.slice(startIndex, endIndex);
+    res.render("listings/books.ejs", {
+      allBooks,
+      query: "",
+      booksOnPage: booksOnPage,
+      currentPage: page,
+      totalPages: totalPages,
+    });
   } else {
     res.render("listings/pagenotfound.ejs");
   }

@@ -1,0 +1,33 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+  <form class="d-flex" role="search" action="/search" method="GET">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+      name="query"
+    />
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+  <h1 class="heading">Search Results for "<%= query %>"</h1>
+  <div class="container main-container">
+    <div class="row user-book-container">
+      <% for(book of results) { %>
+      <div class="book user-book-card col-sm-10 col-md-6 col-lg-4">
+        <img
+          class="book-home-image"
+          src="<%= book.image%>"
+          alt="Book cover"
+          width="200px"
+          height="250px"
+        />
+        <a class="book-home-title" href="/books/<%= book.id %>"
+          ><%= book.title %></a
+        >
+        <p><%= book.genre %></p>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</body>

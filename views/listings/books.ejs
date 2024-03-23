@@ -1,33 +1,146 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <form class="d-flex" role="search">
+  <form class="d-flex" role="search" action="/search" method="GET">
     <input
       class="form-control me-2"
       type="search"
       placeholder="Search"
       aria-label="Search"
+      name="query"
     />
     <button class="btn btn-outline-success" type="submit">Search</button>
   </form>
   <h1 class="heading">Welcome to the BookShelf</h1>
+
+  <% if(query != "") {%>
+  <h3 class="heading">Search Results for "<%= query %>"</h3>
+  <% } %>
+
+  <style>
+    /* Additional styling for book listing page */
+    .user-book-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+
+    .book-parent {
+      width: auto;
+    }
+    .user-book-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .book-details {
+      padding: 20px;
+      height: 170px;
+    }
+
+    .book-title {
+      font-size: 18px;
+      color: #3f51b5;
+      margin-bottom: 10px;
+      max-width: 20ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .book-genre,
+    .book-author,
+    .book-rating {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .book-actions {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: #176b87;
+      border-color: #176b87;
+    }
+
+    .btn-primary:hover {
+      background-color: #12546c;
+      border-color: #12546c;
+    }
+
+    .book-home-image {
+      width: 250px;
+      height: 350px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  </style>
+
   <div class="container main-container">
     <div class="row user-book-container">
-      <%for(book of allBooks) { %>
-
-      <div class="book user-book-card col-sm-10 col-md-6 col-lg-4">
-        <img
-          class="book-home-image"
-          src="<%= book.image%>"
-          alt="Book cover"
-          width="200px"
-          height="250px"
-        />
-        <a class="book-home-title" href="/books/<%= book.id %>"
-          ><%=book.title%></a
-        >
-        <p><%= book.genre%></p>
+      <% for(book of booksOnPage) { %>
+      <div class="col-sm-10 col-md-6 col-lg-4 book-parent">
+        <div class="book user-book-card">
+          <img
+            class="book-home-image"
+            src="<%= book.image %>"
+            alt="Book cover"
+          />
+          <div class="book-details">
+            <h3 class="book-title">
+              <a href="/books/<%= book.id %>"><%= book.title %></a>
+            </h3>
+            <p class="book-genre"><strong>Genre:</strong> <%= book.genre %></p>
+            <p class="book-author">
+              <strong>Author:</strong> <%= book.author %>
+            </p>
+            <div class="book-actions">
+              <a href="/books/<%= book.id %>" class="btn btn-primary"
+                >Read More</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <%}%>
+      <% } %>
     </div>
+    <nav aria-label="Pagination">
+      <ul class="pagination">
+        <% if(currentPage > 1) { %>
+        <li class="page-item">
+          <a class="page-link" href="?query=<%= query %>&page=1">&laquo;</a>
+        </li>
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?query=<%= query %>&page=<%= currentPage - 1 %>"
+            >&lt;</a
+          >
+        </li>
+        <% } %> <% for(let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+          <a class="page-link" href="?query=<%= query %>&page=<%= i %>"
+            ><%= i %></a
+          >
+        </li>
+        <% } %> <% if(currentPage < totalPages) { %>
+        <li class="page-item">
+          <a
+            class="page-link"
+            href="?query=<%= query %>&page=<%= currentPage + 1 %>"
+            >&gt;</a
+          >
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?query=<%= query %>&page=<%= totalPages %>"
+            >&raquo;</a
+          >
+        </li>
+        <% } %>
+      </ul>
+    </nav>
   </div>
 </body>
