@@ -1,17 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
   <div class="center">
-    <h1 class="heading">SignUp</h1>
-    <form action="/signup" method="post">
+    <h1 class="heading">Edit Details</h1>
+    <form action="/edit?_method=PUT" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input
-          type="text"
+          type="username"
           name="username"
           class="form-control w-75 m-auto"
+          value="<%= user.username %>"
           id="username"
           placeholder="Username"
           required
+          readonly
         />
       </div>
       <div class="mb-3">
@@ -20,6 +22,7 @@
           type="email"
           name="email"
           class="form-control w-75 m-auto"
+          value="<%= user.email %>"
           id="email"
           placeholder="E-mail"
           required
@@ -31,6 +34,7 @@
           type="text"
           name="fullName"
           class="form-control w-75 m-auto"
+          value="<%= user.fullName %>"
           id="fullName"
           placeholder="Full Name"
           required
@@ -42,6 +46,7 @@
           type="phone"
           name="phone"
           class="form-control w-75 m-auto"
+          value="<%= user.phone %>"
           id="phone"
           placeholder="Phone Number"
           required
@@ -53,23 +58,35 @@
           type="address"
           name="address"
           class="form-control w-75 m-auto"
+          value="<%= user.address %>"
           id="address"
           placeholder="Address"
           required
         />
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="currentPassword" class="form-label">Current Password</label>
         <input
           type="password"
-          name="password"
+          name="currentPassword"
           class="form-control w-75 m-auto"
-          id="password"
-          placeholder="Password"
+          id="currentPassword"
+          placeholder="Current Password"
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary m-auto">Signup</button>
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">New Password</label>
+        <input
+          type="password"
+          name="newPassword"
+          class="form-control w-75 m-auto"
+          id="newPassword"
+          placeholder="New Password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary m-auto">Edit</button>
     </form>
   </div>
 </body>
