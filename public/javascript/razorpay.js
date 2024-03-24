@@ -1,4 +1,4 @@
-// your-frontend-script.js
+
 document.getElementById("payButton").addEventListener("click", async () => {
   const amount = document.getElementById("amount").value;
   const cartInput = document.getElementById("cart");
@@ -15,6 +15,7 @@ document.getElementById("payButton").addEventListener("click", async () => {
       amount,
       currency: "INR",
       books,
+      cartData,
     }),
   });
 

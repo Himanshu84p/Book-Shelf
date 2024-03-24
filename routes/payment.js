@@ -10,7 +10,7 @@ const razorpay = new Razorpay({
 });
 
 router.post("/create-order", async (req, res) => {
-  const { amount, currency, books } = req.body;
+  const { amount, currency, books, cartData } = req.body;
   console.log(books);
 
   try {
@@ -28,6 +28,9 @@ router.post("/create-order", async (req, res) => {
       books: books,
       totalAmount: amount,
     });
+
+    //clearing cart 
+    const clearCart = await Cart.findByIdAndDelete(cartData?._id)
 
     await newOrder.save();
     res.json(order);
