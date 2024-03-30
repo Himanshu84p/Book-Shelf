@@ -92,6 +92,13 @@ h2 {
   white-space: nowrap;
 }
 
+.book-admin-title {
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .card-image {
   width: 250px;
   height: 350px;

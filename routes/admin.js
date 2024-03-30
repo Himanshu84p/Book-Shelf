@@ -151,4 +151,21 @@ router.delete("/admin/:id", isLoggedIn, async (req, res) => {
   }
 });
 
+//delete user route
+router.delete("/admin/user/:id", isLoggedIn, async (req, res) => {
+  if (req.user.username == "admin") {
+    let { id } = req.params;
+    try {
+      let deletedUser = await User.findByIdAndDelete(id);
+      console.log("Deleted User is : ", deletedUser);
+    } catch (error) {
+      console.log(error);
+    }
+    req.flash("success", "User deleted successfully");
+    res.redirect("/admin/users");
+  } else {
+    res.send("access denied");
+  }
+});
+
 module.exports = router;

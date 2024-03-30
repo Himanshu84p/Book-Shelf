@@ -32,9 +32,17 @@
           <span class="badge badge-success rounded-pill d-inline">Active</span>
         </td>
         <td>
-          <button type="button" class="btn btn-link btn-sm btn-rounded">
-            Edit
-          </button>
+          <form
+            action="/admin/user/<%= user._id  %>?_method=DELETE"
+            method="POST"
+          >
+            <button
+              type="submit"
+              class="btn btn-danger btn-outline btn-sm btn-rounded"
+            >
+              Delete
+            </button>
+          </form>
         </td>
       </tr>
       <%}%> <%}%>
