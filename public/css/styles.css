@@ -5,6 +5,31 @@ body {
   flex-direction: column;
 }
 
+.login-main-body,
+.signup-main-body {
+  background-image: url("/images/login2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+.login-div,
+.signup-div {
+  background: rgb(255, 255, 255); 
+  background: rgba(255, 255, 255, 0.5);
+  padding-bottom: 2rem;
+  width: 500px;
+  margin-top: 100px;
+  margin-bottom: 80px;
+  border-radius: 1rem;
+}
+
+.login-container,
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .center {
   text-align: center;
 }

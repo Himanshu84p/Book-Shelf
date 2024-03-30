@@ -1,75 +1,78 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<body>
-  <div class="center">
-    <h1 class="heading">SignUp</h1>
-    <form action="/signup" method="post">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          name="username"
-          class="form-control w-75 m-auto"
-          id="username"
-          placeholder="Username"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">E-mail</label>
-        <input
-          type="email"
-          name="email"
-          class="form-control w-75 m-auto"
-          id="email"
-          placeholder="E-mail"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="fullName" class="form-label">Full Name</label>
-        <input
-          type="text"
-          name="fullName"
-          class="form-control w-75 m-auto"
-          id="fullName"
-          placeholder="Full Name"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label">Phone Number</label>
-        <input
-          type="phone"
-          name="phone"
-          class="form-control w-75 m-auto"
-          id="phone"
-          placeholder="Phone Number"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="address" class="form-label">Address</label>
-        <input
-          type="address"
-          name="address"
-          class="form-control w-75 m-auto"
-          id="address"
-          placeholder="Address"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control w-75 m-auto"
-          id="password"
-          placeholder="Password"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary m-auto">Signup</button>
-    </form>
+<body class="signup-main-body">
+  <div class="signup-container">
+    <div class="center signup-div">
+      <h1 class="heading">SignUp</h1>
+      <form action="/signup" method="post">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control w-50 m-auto"
+            id="username"
+            placeholder="Username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control w-50 m-auto"
+            id="email"
+            placeholder="E-mail"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input
+            type="text"
+            name="fullName"
+            class="form-control w-50 m-auto"
+            id="fullName"
+            placeholder="Full Name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input
+            type="number"
+            name="phone"
+            class="form-control w-50 m-auto"
+            id="phone"
+            placeholder="Phone Number"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea
+            type="text"
+            name="address"
+            class="form-control w-50 m-auto"
+            id="address"
+            placeholder="Address"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control w-50 m-auto"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary m-auto">Signup</button>
+      </form>
+    </div>
   </div>
 </body>
