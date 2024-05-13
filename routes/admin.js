@@ -35,7 +35,7 @@ router.get("/admin/users", isLoggedIn, async (req, res) => {
 router.get("/admin/orders", isLoggedIn, async (req, res) => {
   if (req.user.username == "admin") {
     try {
-      let allOrders = await Order.find({});
+      let allOrders = await Order.find({}).sort({updatedAt:-1});
       let totalOrders = await Order.find({}).countDocuments();
       let completedOrders = await Order.find({
         status: "completed",
@@ -94,7 +94,7 @@ router.get("/admin/books", isLoggedIn, async (req, res) => {
   }
 });
 
-//Edit book route
+//Edit book route get
 router.get("/admin/:id", isLoggedIn, async (req, res) => {
   if (req.user.username == "admin") {
     let { id } = req.params;
@@ -106,12 +106,41 @@ router.get("/admin/:id", isLoggedIn, async (req, res) => {
   }
 });
 
+//edit book route post
 router.put("/admin/:id", isLoggedIn, async (req, res) => {
   if (req.user.username == "admin") {
     let { id } = req.params;
     let { title, author, image, price, genre, ISBN } = req.body;
+    const stringRegex = /^[A-Za-z\s]+$/;
+    const numericRegex = /^[0-9]+$/;
 
     try {
+      // Validate author, title, and genre fields
+      if (
+        !stringRegex.test(author) ||
+        !stringRegex.test(title) ||
+        !stringRegex.test(genre)
+      ) {
+        req.flash(
+          "error",
+          "Author name, title, and genre should only contain letters and spaces"
+        );
+        return res.redirect(`/admin/${id}`);
+      }
+
+      // Validate ISBN field
+      if (!numericRegex.test(ISBN)) {
+        req.flash("error", "ISBN should contain only numbers");
+        return res.redirect(`/admin/${id}`); 
+      }
+
+      const existingBook = await Book.findOne({ ISBN: ISBN, _id: { $ne: id } });
+      console.log(existingBook);
+      if (existingBook) {
+        req.flash("error", "ISBN already exists");
+        return res.redirect(`/admin/${id}`);
+      }
+
       let editedBook = await Book.findByIdAndUpdate(
         id,
         {
@@ -124,6 +153,8 @@ router.put("/admin/:id", isLoggedIn, async (req, res) => {
         },
         { runValidators: true }
       );
+
+      console.log(editedBook);
     } catch (error) {
       console.log(error);
     }

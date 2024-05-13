@@ -17,7 +17,7 @@
           required
         />
       </div>
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
@@ -27,9 +27,26 @@
           placeholder="Password"
           required
         />
+      </div> -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group w-50 m-auto">
+          <input
+            type="password"
+            name="password"
+            value="<%= signupFormData ? signupFormData.password : '' %>"
+            class="form-control w-50"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <button class="btn btn-outline-secondary togglePassword" type="button" ><i class="fa-solid fa-eye-slash"></i></button>
+        </div>
+        
       </div>
       <button type="submit" class="btn btn-primary mb-3 mt-3">Login</button>
     </form>
   </div>
 </div>
+<script src="/javascript/password.js"></script>
 </body>

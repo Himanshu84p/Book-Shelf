@@ -40,6 +40,47 @@ body {
 .navbar-custom .nav-link {
   color: #eef5ff;
 }
+
+/* hero section  */
+
+.hero-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+  gap: 3rem;
+}
+
+.hero-heading {
+  font-size: 2rem;
+  text-align: left;
+  color: #176b87  ;
+}
+
+.hero-subheading {
+  font-size: 1rem;
+  text-align: left;
+  color: #272829 ;
+}
+.hero-image {
+  width: auto;
+  height: 400px;
+  border-radius: 0.5rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4); 
+}
+
+/* explore section  */
+.explore-section {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem 0;
+}
+
+.explore-btn {
+  font-size: 1.25rem;
+}
+
 footer {
   margin-top: auto;
   background-color: #176b87;

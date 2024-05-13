@@ -3,12 +3,14 @@
   <div class="signup-container">
     <div class="center signup-div">
       <h1 class="heading">SignUp</h1>
-      <form action="/signup" method="post">
+      <% console.log("in signup form",signupFormData)%>
+      <form id="signupForm" action="/signup" method="post">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
             type="text"
             name="username"
+            value="<%= signupFormData ? signupFormData.username : '' %>"
             class="form-control w-50 m-auto"
             id="username"
             placeholder="Username"
@@ -20,6 +22,7 @@
           <input
             type="email"
             name="email"
+            value="<%= signupFormData ? signupFormData.email : '' %>"
             class="form-control w-50 m-auto"
             id="email"
             placeholder="E-mail"
@@ -31,6 +34,7 @@
           <input
             type="text"
             name="fullName"
+            value="<%= signupFormData ? signupFormData.fullName : '' %>"
             class="form-control w-50 m-auto"
             id="fullName"
             placeholder="Full Name"
@@ -42,6 +46,7 @@
           <input
             type="number"
             name="phone"
+            value="<%= signupFormData ? signupFormData.phone : '' %>"
             class="form-control w-50 m-auto"
             id="phone"
             placeholder="Phone Number"
@@ -53,26 +58,45 @@
           <textarea
             type="text"
             name="address"
+            
             class="form-control w-50 m-auto"
             id="address"
             placeholder="Address"
             rows="5"
             required
-          ></textarea>
+          ><%= signupFormData ? signupFormData.address : '' %></textarea>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            class="form-control w-50 m-auto"
-            id="password"
-            placeholder="Password"
-            required
-          />
+          <div class="input-group w-50 m-auto">
+            <input
+              type="password"
+              name="password"
+              value="<%= signupFormData ? signupFormData.password : '' %>"
+              class="form-control w-50"
+              id="password"
+              placeholder="Password"
+              required
+            />
+            <button class="btn btn-outline-secondary togglePassword" type="button" ><i class="fa-solid fa-eye-slash"></i></button>
+          </div>
+          <p id="passwordRequirements" class="form-label text-left">
+            <ul style="list-style-type: disc; margin-left: 110px; text-align: left; color: blueviolet;">
+              <li>Start and end should be a string</li>
+              <li>At least one digit</li>
+              <li>One lowercase letter</li>
+              <li>One uppercase letter</li>
+              <li>One special character</li>
+              <li>Be at least eight characters long</li>
+            </ul>
+          </p>
         </div>
+        
         <button type="submit" class="btn btn-primary m-auto">Signup</button>
       </form>
     </div>
   </div>
+  <script src="/javascript/password.js"></script>
+  
+
 </body>
